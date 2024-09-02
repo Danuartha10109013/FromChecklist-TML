@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\Adminmiddleware;
+use App\Http\Middleware\PegawaiMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -11,7 +13,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->appendToGroup('admin', [
+            Adminmiddleware::class,
+            
+        ]);
+        $middleware->appendToGroup('pegawai', [
+            PegawaiMiddleware::class,
+            
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
