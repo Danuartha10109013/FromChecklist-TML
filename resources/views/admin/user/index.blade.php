@@ -19,42 +19,74 @@
           </ul>
         </nav>
       </div>
+      @if (session('success'))
+          <div class="alert alert-success">
+              {{ session('success') }}
+          </div>
+      @endif
+
+      @if (session('error'))
+          <div class="alert alert-danger">
+              {{ session('error') }}
+          </div>
+      @endif
       <div class="row">
-        <div class="col-md-4 stretch-card grid-margin">
-          <div class="card bg-gradient-danger card-img-holder text-white">
+        <div class="col-12 grid-margin">
+          <div class="card">
             <div class="card-body">
-              <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-              <h4 class="font-weight-normal mb-3">Weekly Sales <i class="mdi mdi-chart-line mdi-24px float-end"></i>
-              </h4>
-              <h2 class="mb-5">$ 15,0000</h2>
-              <h6 class="card-text">Increased by 60%</h6>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 stretch-card grid-margin">
-          <div class="card bg-gradient-info card-img-holder text-white">
-            <div class="card-body">
-              <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-              <h4 class="font-weight-normal mb-3">Weekly Orders <i class="mdi mdi-bookmark-outline mdi-24px float-end"></i>
-              </h4>
-              <h2 class="mb-5">45,6334</h2>
-              <h6 class="card-text">Decreased by 10%</h6>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 stretch-card grid-margin">
-          <div class="card bg-gradient-success card-img-holder text-white">
-            <div class="card-body">
-              <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-              <h4 class="font-weight-normal mb-3">Visitors Online <i class="mdi mdi-diamond mdi-24px float-end"></i>
-              </h4>
-              <h2 class="mb-5">95,5741</h2>
-              <h6 class="card-text">Increased by 5%</h6>
+              <h4 class="card-title text-end ">
+                <span style="padding: 10px;border-radius: 5px" class=" page-title-icon bg-gradient-primary text-white me-2">
+                  <a style="color: white;text-decoration: none" href="{{route('admin.user-add')}}" class="mdi mdi-account">Add User</a>
+                </span> 
+                <p style="margin-top: -25px" class="text-start">All Users</p></h4>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                      <tr>
+                          <th>No</th>
+                          <th>Nama</th>
+                          <th>Username</th>
+                          <th>Email</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @foreach ($data as $d)
+                      <tr>
+                          <td>{{ $loop->iteration }}</td>
+                          <td>{{ $d->name }}</td>
+                          <td>{{ $d->username }}</td>
+                          <td>{{ $d->email }}</td>
+                          <td>
+                            @if ($d->active == 1)
+                            <a href="{{route('admin.user-inactive', $d->id)}}">
+                              <label class="badge badge-gradient-success">Active</label>
+                            </a>
+                              @else
+                              <a href="{{route('admin.user-active', $d->id)}}">
+                                <label class="badge badge-gradient-danger">Off</label>
+                              </a>
+                            @endif
+                          </td>
+                          
+                          <td>
+                            <a href="{{route('admin.user-edit',$d->id)}}">
+                              <i class="mdi mdi-pencil text-success"></i>
+                            </a>
+                            <a href="{{route('admin.user-delete',$d->id)}}">
+                              <i class="mdi mdi-delete text-danger"></i>
+                            </a>
+                          </td>
+                      </tr>
+                      @endforeach
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      
       
     </div>
     
