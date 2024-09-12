@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\FormPegawaiController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AutoLogout;
@@ -54,6 +55,12 @@ Route::middleware([AutoLogout::class])->group(function () {
     Route::group(['prefix' => 'pegawai', 'middleware' => ['pegawai'], 'as' => 'pegawai.'], function () {
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::prefix('form')->group(function () {
+            Route::get('/create/{id}', [FormPegawaiController::class, 'create'])->name('form-create');
+            Route::post('/store/{id}/{id_field}', [FormPegawaiController::class, 'store'])->name('form.store');
+            Route::get('/hasil', [FormPegawaiController::class, 'hasil'])->name('form-hasil');
+
+        });
     });
 
 });

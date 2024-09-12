@@ -28,6 +28,45 @@
           <i class="mdi mdi-home menu-icon"></i>
         </a>
       </li>
+      
+      <hr>
+      @php
+        use App\Models\FormsModel;
+        use App\Models\KateFormsModel;
+        $kategori = KateFormsModel::all();
+        // $data = FormsModel::where('active', 1)->get();
+
+      @endphp
+      @foreach ($kategori as $kategori)
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#{{$kategori->kategori}}" aria-expanded="false" aria-controls="{{$kategori->kategori}}">
+          <span class="menu-title">{{$kategori->kategori}}</span>
+          <i class="menu-arrow"></i>
+          <i class="mdi mdi-{{$kategori->kategori}} menu-icon"></i>
+        </a>
+        <div class="collapse" id="{{$kategori->kategori}}">
+          <ul class="nav flex-column sub-menu">
+            @php
+              $data = FormsModel::where('kategori', $kategori->id)->
+              where('active',1)->get();
+            @endphp
+            @foreach ($data as $forms)
+              
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('pegawai.form-create', $forms->id)}}">{{$forms->nama}}</a>
+            </li>
+            @endforeach
+          </ul>
+        </div>
+      </li>
+      @endforeach
+      <hr>
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('pegawai.form-hasil')}}">
+          <span class="menu-title">Record Forms</span>
+          <i class="mdi mdi-record-circle menu-icon"></i>
+        </a>
+      </li>
       <hr>
       <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
@@ -52,7 +91,8 @@
       <hr>
       <li class="nav-item">
         <a class="nav-link" data-bs-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="icons">
-          <span class="menu-title">Icons</span>
+          <span class="menu-title">Record Forms</span>
+          <i class="menu-arrow"></i>
           <i class="mdi mdi-contacts menu-icon"></i>
         </a>
         <div class="collapse" id="icons">

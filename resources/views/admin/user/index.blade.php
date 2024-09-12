@@ -49,6 +49,7 @@
                           <th>Email</th>
                           <th>Status</th>
                           <th>Action</th>
+                          <th>Role</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -78,6 +79,12 @@
                               <i class="mdi mdi-delete text-danger"></i>
                             </a>
                           </td>
+                          <td>
+                            @if ($d->role == 1)
+                                Admin
+                            @else
+                                Pegawai
+                            @endif
                       </tr>
                       @endforeach
                   </tbody>

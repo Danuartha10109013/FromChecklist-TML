@@ -185,8 +185,8 @@ class FormController extends Controller
     }
 
     // Convert arrays into comma-separated strings
-    $labelsString = implode(',', $labels);
-    $typesString = implode(',', $types);
+    $labelsString = implode('|', $labels);
+    $typesString = implode('|', $types);
 
     // Debugging: Check the combined strings
     // dd($labelsString);
@@ -207,8 +207,8 @@ public function editForm($id)
      $formField = FormField::where('id', $id)->firstOrFail();
 
      // Ensure that the label and type fields are strings
-     $labels = explode(',', $formField->label);
-     $types = explode(',', $formField->type);
+     $labels = explode('|', $formField->label);
+     $types = explode('|', $formField->type);
  
      // Pass the data to the view
      return view('forms.edit', [
